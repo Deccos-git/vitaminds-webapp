@@ -1,0 +1,70 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    scroll-behavior: smooth;
+}
+
+h1{
+    font-family: 'Libre Baskerville', serif;
+    color: #8f0300;
+    font-size: 35px;
+}
+
+h2{
+    font-family: 'Libre Baskerville', serif;
+    color: #8f0300;
+    font-size: 25px;
+}
+
+h3{
+    font-family: 'Libre Baskerville', serif;
+    color: #8f0300;
+    font-size: 20px;
+}
+
+h4{
+    font-family: 'Libre Baskerville', serif;
+    color: #8f0300;
+    font-size: 18px;
+}
+
+p{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+li{
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+button{
+    font-family: 'Poppins', sans-serif;
+    background-color: #f57070;;
+    border: 1px solid #f57070;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.button-container{
+    margin: 30px 0px;
+}
+
+a{
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    color: #8f0300;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+input{
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 90%;
+    font-size: 18px;
+}
+
