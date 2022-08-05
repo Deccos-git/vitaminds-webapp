@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom"
-import { useFirestore } from '../../helpers/useFirestore'
+import { useFirestoreOrdered } from '../../helpers/useFirestore'
 
 const Stories = () => {
 
     const navigate = useNavigate()
 
-    const stories = useFirestore('stories','')
+    const stories = useFirestoreOrdered('stories','asc')
 
     const showStory = (e) => {
 

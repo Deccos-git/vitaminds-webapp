@@ -2,7 +2,7 @@ import React from 'react'
 import TinyMCE from '../../components/common/TinyMCE'
 import { useState } from 'react'
 import { db } from '../../libs/firebase'
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
 import uuid from 'react-uuid';
 import { Auth } from '../../state/Auth';
 import { useContext } from 'react';
@@ -26,12 +26,23 @@ const CreateStorie = () => {
 
         ButtonClicked(e, 'Gedeeld')
 
+        const storyId = uuid()
+
         await setDoc(doc(db, "stories", uuid()), {
             title: title,
             body: body,
             user: user.id,
-            id: uuid()
+            id: storyId,
+            timestamp: serverTimestamp()
           })
+
+        await setDoc(doc(db, 'wall', uuid()),{
+            user: user.id,
+            timestamp: serverTimestamp(),
+            type: 'story',
+            id: uuid(),
+            storyId: storyId
+        })
 
     }
 

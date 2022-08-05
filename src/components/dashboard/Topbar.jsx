@@ -6,8 +6,6 @@ import { useContext } from 'react';
 const TopBar = () => {
   const [user] = useContext(Auth)
 
-  console.log(user)
-
   const navigate = useNavigate()
 
   return (
