@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db } from '../../libs/firebase'
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, serverTimestamp } from "firebase/firestore"; 
 import { useState } from "react";
 import dummyAvatar from '../../assets/dummy-profile-photo.jpeg'
 import ButtonClicked from "../../hooks/ButtonClicked";
@@ -29,13 +29,22 @@ const Register = () => {
 
             const user = userCredential.user;
 
+            const id = uuid()
+
             await setDoc(doc(db, "users", user.uid), {
                 name: name,
                 email: email,
                 avatar: avatar,
-                id: uuid(),
+                id: id,
                 activated: false
               });
+
+              await setDoc(doc(db, 'wall', uuid()),{
+                user: id,
+                timestamp: serverTimestamp(),
+                type: 'story',
+                id: uuid(),
+            })
 
               navigate(`/login`)
         })

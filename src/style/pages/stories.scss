@@ -1,0 +1,47 @@
+#create-story-title-container{
+    margin-bottom: 60px;
+
+    h2{
+        color: black;
+    }
+}
+
+.user-meta-container{
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+
+    img{
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    p{
+        font-weight: bold;
+    }
+}
+
+.story-meta-container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.story-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.story-body-container{
+    width: 100%;
+}
+
+.messagebar-story-container{
+    bottom: 20px;
+    top: auto;
+    width: 80%;
+}

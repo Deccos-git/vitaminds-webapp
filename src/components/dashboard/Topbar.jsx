@@ -10,8 +10,8 @@ const TopBar = () => {
 
   return (
       <div id='topbar-landing-container'>
-        <img id='topbar-logo' src={Logo} alt="Logo Vitaminds" onClick={() => navigate('/')} />
-        <div id='user-profile-container'>
+        <img id='topbar-logo' src={Logo} alt="Logo Vitaminds" onClick={() => navigate(`/`)} />
+        <div id='user-profile-container' onClick={() => navigate(`profile/${user.id}`)}>
           <img src={user.avatar} alt="profile picture" />
           <p>{user.name}</p>
         </div>

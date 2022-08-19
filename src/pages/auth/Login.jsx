@@ -46,7 +46,7 @@ const Login = () => {
     <div className='login-register-container'>
         <h1>Login</h1>
         <p>Email</p>
-        <input type="text" placeholder='Schrijf hier je email' onChange={emailHandler} />
+        <input type="email" placeholder='Schrijf hier je email' onChange={emailHandler} />
         <p>Paswoord</p>
         <input type="password" placeholder='Schrijf hier je paswoord' onChange={passwordHandler} />
         <div className='button-container'>

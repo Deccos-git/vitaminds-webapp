@@ -1,21 +1,15 @@
-import { useNavigate } from "react-router-dom"
-import { useFirestoreOrdered } from '../../helpers/useFirestore'
 import { useFirestoreId } from "../../helpers/useFirestore"
 import timestampOptions from '../../helpers/timestampOptions'
+import Location from "../../helpers/location"
 import DummyAvatar from '../../assets/dummy-profile-photo.jpeg'
+import MessageBar from "../../components/common/MessageBar"
+import Messages from "../../components/common/Messages"
 
-const Stories = () => {
+const Story = () => {
 
-    const navigate = useNavigate()
+    const id = Location()[3]
 
-    const stories = useFirestoreOrdered('stories','asc')
-
-    const showStory = (e) => {
-
-        const id = e.target.dataset.id
-
-        navigate(`/dashboard/story/${id}`)
-    }
+    const stories = useFirestoreId('stories', id)
 
     const User = ({story}) => {
 
@@ -48,27 +42,24 @@ const Stories = () => {
             </div>
         )
     }
-
-    return (
-      <div className='page-container'>
-        <div className='page-top-container'>
-            <h1>Ervaringsverhalen</h1>
-            <button onClick={() => navigate(`/dashboard/createstorie`)}>Deel jouw verhaal</button>
-        </div>
-        <div className='card-container'>
-            {stories && stories.map(story => (
-                <div className='card' key={story.id}>
-                    <h2>{story.title}</h2>
-                    <User story={story}/>
-                    <div className='button-container card-button-container'>
-                        <button data-id={story.id} onClick={showStory}>Bekijk</button>
-                    </div>
+  return (
+    <div className='page-container'>
+        {stories && stories.map(story => (
+            <div key={story.id} className='story-container'>
+                <h1>{story.title}</h1>
+                <User story={story}/>
+                <div className='story-body-container'>
+                    <p dangerouslySetInnerHTML={{__html: story.body}}></p>
                 </div>
-            ))}
+                <h2>Berichten</h2>
+                <Messages id={id}/>
+                <div className='messagebar-story-container'>
+                    <MessageBar item='story' id={story.id} />
+                </div>
+            </div>
+        ))}
+    </div>
+  )
+}
 
-        </div>
-      </div>
-    )
-  }
-  
-  export default Stories
+export default Story

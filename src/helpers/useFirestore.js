@@ -94,8 +94,40 @@ const useFirestoreId = (collect, id) => {
     return docs
 }
 
+const useFirestoreMessage = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'messages');
+        const q = query(col, where("itemId", '==', id), orderBy("timestamp", 'desc'))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
 export { 
     useFirestore,
     useFirestoreOrdered,
-    useFirestoreId
+    useFirestoreId,
+    useFirestoreMessage
 }

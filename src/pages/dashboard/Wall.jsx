@@ -29,13 +29,13 @@ const Wall = () => {
       <>
         {users && users.map(user => (
           <>
-            <div className='card-user-container'>
+            <div key={user.id} className='card-user-container'>
               <img src={user.avatar} alt="user avatar" />
               <p><b>{user.name}</b></p>
             </div>
             <p>heeft een nieuw {type} toegevoegd</p>
             <p>{item.timestamp.toDate().toLocaleDateString("nl-NL", timestampOptions())}</p>
-            <button onClick={() => navigateTo(`dashboard/story/${item.storyId}`)}>Bekijk</button>
+            <button onClick={() => navigateTo(`/dashboard/story/${item.storyId}`)}>Bekijk</button>
           </>
          
         ))}
@@ -44,7 +44,9 @@ const Wall = () => {
   }
   return (
     <div className='page-container'>
-      <h1>Activiteit</h1>
+        <div className='page-top-container'>
+          <h1>Alle activiteiten</h1>
+        </div>
       <div className='banner-container'>
         {items && items.map(item => (
           <div className='banner' key={item.id}>
