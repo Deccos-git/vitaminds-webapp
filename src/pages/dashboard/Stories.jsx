@@ -8,7 +8,7 @@ const Stories = () => {
 
     const navigate = useNavigate()
 
-    const stories = useFirestoreOrdered('stories','asc')
+    const stories = useFirestoreOrdered('stories','desc')
 
     const showStory = (e) => {
 

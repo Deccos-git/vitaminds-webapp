@@ -12,17 +12,17 @@ const Group = () => {
   return (
     <div className='page-container'>
         {groups && groups.map(group => (
-            <>
-            <div className='page-top-container'>
-                <h1>{group.name}</h1>
-            </div>
-            <div className='group-container'>
-                <Messages id={id}/>
-                <div className='messagebar-group-container'>
-                    <MessageBar item='group' id={group.id} />
+            <div key={group.id}>
+                <div className='page-top-container'>
+                    <h1>{group.name}</h1>
+                </div>
+                <div className='group-container'>
+                    <Messages id={id}/>
+                    <div className='messagebar-group-container'>
+                        <MessageBar item='group' id={group.id} />
+                    </div>
                 </div>
             </div>
-            </>
         ))}
         
     </div>

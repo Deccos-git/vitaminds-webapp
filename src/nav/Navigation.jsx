@@ -9,6 +9,9 @@ import Story from "../pages/dashboard/Story";
 import Group from "../pages/dashboard/Group";
 import Academy from "../pages/dashboard/Academy";
 import Profile from "../pages/auth/Profile";
+import Notifications from "../pages/topbar/Notifications";
+import Chats from "../pages/topbar/Chats";
+import Search from "../pages/topbar/Search";
 
 const Navigation = () => {
   return (
@@ -21,6 +24,9 @@ const Navigation = () => {
             <Route path={`/dashboard/group/:id`} element={<Group/>}/>
             <Route path={`/dashboard/academy/:id`} element={<Academy/>}/>
             <Route path={`/dashboard/profile/:id`} element={<Profile/>}/>
+            <Route path={`/dashboard/notifications/:id`} element={<Notifications/>}/>
+            <Route path={`/dashboard/chats/:id`} element={<Chats/>}/>
+            <Route path={`/dashboard/search`} element={<Search/>}/>
         </Route>
         <Route path={`/`} >
             <Route exact path={`/`} element={<Login/>}/>

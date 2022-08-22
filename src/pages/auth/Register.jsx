@@ -36,7 +36,8 @@ const Register = () => {
                 email: email,
                 avatar: avatar,
                 id: id,
-                activated: false
+                activated: false,
+                timestamp: serverTimestamp()
               });
 
               await setDoc(doc(db, 'wall', uuid()),{

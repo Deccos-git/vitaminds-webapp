@@ -1,0 +1,15 @@
+.profile-avatar{
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+}
+
+.register-date-container{
+    display: flex;
+    justify-content: flex-start;
+
+    p{
+        margin-right: 5px;
+    }
+}

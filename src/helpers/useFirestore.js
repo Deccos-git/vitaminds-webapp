@@ -125,9 +125,105 @@ const useFirestoreMessage = (id) => {
     return docs
 }
 
+const useFirestoreLikes = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'likes');
+        const q = query(col, where("message", '==', id))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
+const useFirestoreNotifications = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'notifications');
+        const q = query(col, where("reciever", '==', id), orderBy("timestamp", 'desc'))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
+const useFirestoreNewNotifications = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'notifications');
+        const q = query(col, where("reciever", '==', id), where("new", '==', true))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
 export { 
     useFirestore,
     useFirestoreOrdered,
     useFirestoreId,
-    useFirestoreMessage
+    useFirestoreMessage,
+    useFirestoreLikes,
+    useFirestoreNotifications,
+    useFirestoreNewNotifications
 }

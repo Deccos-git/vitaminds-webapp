@@ -35,9 +35,6 @@ const CreateStorie = () => {
         setPublicAnonymously(value)
     }
 
-    console.log(publicAnonymously)
-
-
     const saveStory = async (e) => {
 
         ButtonClicked(e, 'Gedeeld')
@@ -62,13 +59,25 @@ const CreateStorie = () => {
             storyId: storyId
         })
 
+        await setDoc(doc(db, 'search', uuid()),{
+            user: user.id,
+            timestamp: serverTimestamp(),
+            type: 'story',
+            id: uuid(),
+            itemId: storyId,
+            content: title,
+            url: `story/${storyId}`
+        })
+
     }
 
     return (
         <div className='page-container'>
-            <h1>Deel een ervaringsverhaal</h1>
+             <div className='page-top-container'>
+                <h1>Deel je ervaringsverhaal</h1>
+            </div>
             <div id='create-story-title-container'>
-                <h2>Geej je verhaal een titel</h2>
+                <h2>Geef je verhaal een titel</h2>
                 <input type="text" placeholder='Schrijf hier de titel' onChange={titleHandler} />
             </div>
             <div id='create-story-title-container'>
