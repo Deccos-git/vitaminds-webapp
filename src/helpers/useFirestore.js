@@ -218,6 +218,99 @@ const useFirestoreNewNotifications = (id) => {
     return docs
 }
 
+const useFirestoreMemberships = (type, id, auth) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'memberships');
+        const q = query(col, where(type, '==', id), where("user", '==', auth))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[type, id, auth])
+
+    return docs
+}
+
+const useFirestoreGroups = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'groups');
+        const q = query(col, where('academy', '==', id))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
+const useFirestoreArticles = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'articles');
+        const q = query(col, where('academy', '==', id))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
 export { 
     useFirestore,
     useFirestoreOrdered,
@@ -225,5 +318,8 @@ export {
     useFirestoreMessage,
     useFirestoreLikes,
     useFirestoreNotifications,
-    useFirestoreNewNotifications
+    useFirestoreNewNotifications,
+    useFirestoreMemberships,
+    useFirestoreGroups,
+    useFirestoreArticles
 }

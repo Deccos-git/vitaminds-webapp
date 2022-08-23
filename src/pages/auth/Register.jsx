@@ -8,15 +8,19 @@ import ButtonClicked from "../../hooks/ButtonClicked";
 import { Link } from 'react-router-dom'
 import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom"
+import { useFirestore } from "../../helpers/useFirestore";
 
 const Register = () => {
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
     const [name, setName] = useState(null)
     const [avatar, setAvatar] = useState(dummyAvatar)
+    const [academy, setAcademy] = useState(null)
     const [progress, setProgress] = useState(0)
 
     const navigate = useNavigate()
+
+    const academies = useFirestore('academies')
 
     const register = (e) => {
 
@@ -37,6 +41,7 @@ const Register = () => {
                 avatar: avatar,
                 id: id,
                 activated: false,
+                academy: academy,
                 timestamp: serverTimestamp()
               });
 
@@ -45,7 +50,15 @@ const Register = () => {
                 timestamp: serverTimestamp(),
                 type: 'story',
                 id: uuid(),
-            })
+              })
+
+              await setDoc(doc(db, 'memberships', uuid()),{
+                user: id,
+                timestamp: serverTimestamp(),
+                type: 'academy',
+                academy: academy,
+                id: uuid(),
+              })
 
               navigate(`/login`)
         })
@@ -73,6 +86,15 @@ const Register = () => {
         const value = e.target.value 
 
         setPassword(value)
+    }
+
+    const academyHandler = (e) => {
+
+        const option = e.target.options
+
+        const value = option[option.selectedIndex].innerHTML
+
+        setAcademy(value)
     }
 
     const avatarHandler = (e) => {
@@ -124,6 +146,13 @@ const Register = () => {
         <p>Profielfoto</p>
         <img id='register-avatar' src={avatar ? avatar : dummyAvatar} alt="profile picture" />
         <input type="file" onChange={avatarHandler} />
+        <p>Herstelacademie</p>
+        <select name="" id="" onChange={academyHandler}>
+            <option value="">Selecteer je herstelacademie</option>
+            {academies && academies.map(item => (
+                <option value={item.id}>{item.name}</option>
+            ))}
+        </select>
         <p>Email</p>
         <input type="text" placeholder='Schrijf hier je email' onChange={emailHandler} />
         <p>Paswoord</p>

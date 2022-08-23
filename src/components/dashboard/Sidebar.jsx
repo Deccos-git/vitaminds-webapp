@@ -3,11 +3,11 @@ import ActivityIcon from '../../assets/icons/activity-icon.png'
 import FileIcon from '../../assets/icons/file-icon.png'
 import GroupIcon from '../../assets/icons/group-icon.png'
 import HomeIcon from '../../assets/icons/home-icon.png'
-import { useFirestore } from "../../helpers/useFirestore"
+import { useFirestore, useFirestoreGroups } from "../../helpers/useFirestore"
 
 const Sidebar = () => {
 
-  const groups = useFirestore('groups')
+  const groups = useFirestoreGroups('public')
   const academies = useFirestore('academies')
 
   return (

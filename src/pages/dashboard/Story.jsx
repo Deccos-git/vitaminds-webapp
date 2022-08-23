@@ -46,7 +46,9 @@ const Story = () => {
     <div className='page-container'>
         {stories && stories.map(story => (
             <div key={story.id} className='story-container'>
-                <h1>{story.title}</h1>
+                <div className='page-top-container'>
+                    <h1>{story.title}</h1>
+                </div>
                 <User story={story}/>
                 <div className='story-body-container'>
                     <p dangerouslySetInnerHTML={{__html: story.body}}></p>

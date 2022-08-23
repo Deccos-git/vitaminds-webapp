@@ -7,7 +7,7 @@ const notification = async (source, reciever, sender, type) => {
     await setDoc(doc(db, "notifications", uuid()), {
         source: source,
         timestamp: serverTimestamp(),
-        reciever: reciever,
+        reciever: reciever ? reciever : '',
         sender: sender,
         type: type,
         new: true

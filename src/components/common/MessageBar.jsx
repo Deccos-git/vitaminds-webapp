@@ -11,6 +11,7 @@ const MessageBar = ({item, reciever, id,}) => {
     const [user] = useContext(Auth)
 
     const [message, setMessage] = useState('')
+    const [showFileUpload, setShowFileUpload] = useState('none')
 
     const url = `${Location()[2]}/${Location()[3]}`
 
@@ -40,12 +41,26 @@ const MessageBar = ({item, reciever, id,}) => {
 
     }
 
+    const toggleFileUpload = () => {
+
+      if(showFileUpload === 'none'){
+        setShowFileUpload('block')
+      } else{
+        setShowFileUpload('none')
+      }
+
+    }
+
   return (
-    <div className='messagebar-container'>
-        <button>+</button>
-        <input type="text" placeholder='Schrijf hier een bericht' onChange={messageHandler} />
-        <button onClick={saveMessage}>Verstuur</button>
+    <div>
+      <div className='messagebar-container'>
+          <button onClick={toggleFileUpload}>+</button>
+          <input type="text" placeholder='Schrijf hier een bericht' onChange={messageHandler} />
+          <button onClick={saveMessage}>Verstuur</button>
+      </div>
+      <input id='upload-file-input' type="file" style={{display: showFileUpload}} />
     </div>
+    
   )
 }
 

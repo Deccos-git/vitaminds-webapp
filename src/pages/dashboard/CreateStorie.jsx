@@ -1,4 +1,3 @@
-import React from 'react'
 import TinyMCE from '../../components/common/TinyMCE'
 import { useState } from 'react'
 import { db } from '../../libs/firebase'
@@ -8,6 +7,7 @@ import { Auth } from '../../state/Auth';
 import { useContext } from 'react';
 import ButtonClicked from '../../hooks/ButtonClicked'
 import saveFile from '../../components/core/saveFile';
+import { useNavigate } from "react-router-dom";
 
 const CreateStorie = () => {
     const [user] = useContext(Auth)
@@ -16,6 +16,8 @@ const CreateStorie = () => {
     const [title, setTitle] = useState(null)
     const [banner, setBanner] = useState(null)
     const [publicAnonymously, setPublicAnonymously] = useState(true)
+
+    const navigate = useNavigate()
 
     const titleHandler = (e) => {
 
@@ -68,6 +70,8 @@ const CreateStorie = () => {
             content: title,
             url: `story/${storyId}`
         })
+
+        navigate(`/dashboard/stories`)
 
     }
 

@@ -12,6 +12,10 @@ import Profile from "../pages/auth/Profile";
 import Notifications from "../pages/topbar/Notifications";
 import Chats from "../pages/topbar/Chats";
 import Search from "../pages/topbar/Search";
+import Settings from "../pages/auth/Settings";
+import AddArticle from "../pages/dashboard/AddArticle";
+import AddGroup from "../pages/dashboard/AddGroup";
+import Article from "../pages/dashboard/Article";
 
 const Navigation = () => {
   return (
@@ -24,9 +28,13 @@ const Navigation = () => {
             <Route path={`/dashboard/group/:id`} element={<Group/>}/>
             <Route path={`/dashboard/academy/:id`} element={<Academy/>}/>
             <Route path={`/dashboard/profile/:id`} element={<Profile/>}/>
+            <Route path={`/dashboard/settings/:id`} element={<Settings/>}/>
             <Route path={`/dashboard/notifications/:id`} element={<Notifications/>}/>
             <Route path={`/dashboard/chats/:id`} element={<Chats/>}/>
             <Route path={`/dashboard/search`} element={<Search/>}/>
+            <Route path={`/dashboard/addgroup/:id`} element={<AddGroup/>}/>
+            <Route path={`/dashboard/addarticle/:id`} element={<AddArticle/>}/>
+            <Route path={`/dashboard/article/:id`} element={<Article/>}/>
         </Route>
         <Route path={`/`} >
             <Route exact path={`/`} element={<Login/>}/>
