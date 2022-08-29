@@ -1,0 +1,44 @@
+.role-item-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    margin: 20px 0px;
+    width: 90%;
+    background-color: white;
+
+    img{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        margin: 0px 20px;
+        cursor: pointer;
+    }
+
+    p{
+        cursor: pointer;
+    }
+
+    .role-actions-container{
+        margin: 0px 20px 0px auto;
+
+        img{
+            height: 20px;
+            width: 20px;
+            border-radius: 0px;
+        }
+    }
+
+    .role-academy-admin-academy{
+        margin-left: 20px;
+        font-weight: bold;
+    }
+}
+
+.line-div-settings{
+    height: 1px;
+    width: 100%;
+    background-color: lightgrey;
+    margin: 20px 0px;
+}

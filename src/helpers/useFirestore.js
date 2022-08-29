@@ -311,6 +311,68 @@ const useFirestoreArticles = (id) => {
     return docs
 }
 
+const useFirestoreRoles = (role) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'roles');
+        const q = query(col, where('role', '==', role))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[role])
+
+    return docs
+}
+
+const useFirestoreRolesAcademy = (role, id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'roles');
+        const q = query(col, where('role', '==', role), where('user', '==', id))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[role, id])
+
+    return docs
+}
+
 export { 
     useFirestore,
     useFirestoreOrdered,
@@ -321,5 +383,7 @@ export {
     useFirestoreNewNotifications,
     useFirestoreMemberships,
     useFirestoreGroups,
-    useFirestoreArticles
+    useFirestoreArticles,
+    useFirestoreRoles,
+    useFirestoreRolesAcademy
 }

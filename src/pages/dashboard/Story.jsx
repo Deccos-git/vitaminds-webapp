@@ -48,8 +48,8 @@ const Story = () => {
             <div key={story.id} className='story-container'>
                 <div className='page-top-container'>
                     <h1>{story.title}</h1>
+                    <User story={story}/>
                 </div>
-                <User story={story}/>
                 <div className='story-body-container'>
                     <p dangerouslySetInnerHTML={{__html: story.body}}></p>
                 </div>

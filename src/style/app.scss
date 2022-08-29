@@ -70,6 +70,15 @@ input{
     font-family: 'Poppins', sans-serif;
 }
 
+select{
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 90%;
+    font-size: 18px;
+    font-family: "Poppins", sans-serif;
+}
+
 textarea{
     border-radius: 5px;
     padding: 10px;
@@ -195,6 +204,12 @@ textarea{
     position: absolute;
     background-color: white;
     padding: 10px 20px 10px 10px;
+
+    .line-div{
+        height: 1px;
+        width: 100%;
+        background-color: lightgrey;
+    }
 
     .dropdown-icon-container{
         display: flex;

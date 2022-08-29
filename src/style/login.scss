@@ -1,6 +1,8 @@
 .login-register-container{
     width: 100%;
-    padding: 30px;
+    padding: 90px 30px 30px 30px;
+    min-height: 100vh;
+    background-color: #f5fcff;
 }
 
 #register-avatar{
@@ -9,4 +11,13 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
+}
+
+.login-register-detail-container{
+
+    h2{
+        font-size: 20px;
+        color: rgb(48, 45, 45);
+        font-family: 'Poppins', sans-serif;
+    }
 }

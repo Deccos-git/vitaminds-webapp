@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import uuid from 'react-uuid';
 import { useNavigate } from "react-router-dom"
 import { useFirestore } from "../../helpers/useFirestore";
+import Logo from '../../assets/Logo2021-red.png'
 
 const Register = () => {
     const [email, setEmail] = useState(null)
@@ -92,7 +93,7 @@ const Register = () => {
 
         const option = e.target.options
 
-        const value = option[option.selectedIndex].innerHTML
+        const value = option[option.selectedIndex].value
 
         setAcademy(value)
     }
@@ -139,30 +140,47 @@ const Register = () => {
     }
 
   return (
-    <div className='login-register-container'>
-        <h1>Register</h1>
-        <p>Naam</p>
-        <input type="text" placeholder='Schrijf hier je naam' onChange={nameHandler} />
-        <p>Profielfoto</p>
-        <img id='register-avatar' src={avatar ? avatar : dummyAvatar} alt="profile picture" />
-        <input type="file" onChange={avatarHandler} />
-        <p>Herstelacademie</p>
-        <select name="" id="" onChange={academyHandler}>
-            <option value="">Selecteer je herstelacademie</option>
-            {academies && academies.map(item => (
-                <option value={item.id}>{item.name}</option>
-            ))}
-        </select>
-        <p>Email</p>
-        <input type="text" placeholder='Schrijf hier je email' onChange={emailHandler} />
-        <p>Paswoord</p>
-        <input type="password" placeholder='Schrijf hier je paswoord' onChange={passwordHandler} />
-        <div className='button-container'>
-            <button onClick={register}>Registreer</button>
+    <div className="layout-container">
+        <div id='topbar-landing-container'>
+            <img id='topbar-logo' src={Logo} alt="Logo Vitaminds" onClick={() => navigate(`/`)} />
         </div>
-        <p>Al een account? 
-        <Link to="/login"> Log in</Link>
-        </p>
+        <div className='login-register-container'>
+            <h1>Registreer</h1>
+            <div className='login-register-detail-container'>
+                <h2>Naam</h2>
+                <input type="text" placeholder='Schrijf hier je naam' onChange={nameHandler} />
+            </div>
+           <div className='login-register-detail-container'>
+                <h2>Profielfoto</h2>
+                <img id='register-avatar' src={avatar ? avatar : dummyAvatar} alt="profile picture" />
+                <div>
+                    <input type="file" onChange={avatarHandler} />
+                </div>
+           </div>
+           <div className='login-register-detail-container'>
+                <h2>Herstelacademie</h2>
+                <select name="" id="" onChange={academyHandler}>
+                    <option value="">Selecteer je herstelacademie</option>
+                    {academies && academies.map(item => (
+                        <option value={item.id}>{item.name}</option>
+                    ))}
+                </select>
+           </div>
+           <div className='login-register-detail-container'>
+                <h2>Email</h2>
+                <input type="text" placeholder='Schrijf hier je email' onChange={emailHandler} />
+           </div>
+            <div className='login-register-detail-container'>
+                <h2>Paswoord</h2>
+                <input type="password" placeholder='Schrijf hier je paswoord' onChange={passwordHandler} />
+            </div>
+            <div className='button-container'>
+                <button onClick={register}>Registreer</button>
+            </div>
+            <p>Al een account? 
+            <Link to="/login"> Log in</Link>
+            </p>
+        </div>
     </div>
   )
 }

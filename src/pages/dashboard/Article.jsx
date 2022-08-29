@@ -32,8 +32,8 @@ const Article = () => {
             <div key={item.id} className='story-container'>
                 <div className='page-top-container'>
                     <h1>{item.title}</h1>
+                    <User item={item}/>
                 </div>
-                <User item={item}/>
                 <div className='story-body-container'>
                     <p dangerouslySetInnerHTML={{__html: item.body}}></p>
                 </div>

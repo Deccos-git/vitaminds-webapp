@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import ButtonClicked from "../../hooks/ButtonClicked";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import Logo from '../../assets/Logo2021-red.png'
 
 const Login = () => {
   const [email, setEmail] = useState(null)
@@ -43,18 +44,23 @@ const Login = () => {
   }
 
   return (
-    <div className='login-register-container'>
-        <h1>Login</h1>
-        <p>Email</p>
-        <input type="email" placeholder='Schrijf hier je email' onChange={emailHandler} />
-        <p>Paswoord</p>
-        <input type="password" placeholder='Schrijf hier je paswoord' onChange={passwordHandler} />
-        <div className='button-container'>
-            <button onClick={login}>Login</button>
-        </div>
-        <p>Nog geen account? 
-        <Link to="/register"> Registreer</Link>
-        </p>
+    <div className="layout-container">
+      <div id='topbar-landing-container'>
+        <img id='topbar-logo' src={Logo} alt="Logo Vitaminds" onClick={() => navigate(`/`)} />
+      </div>
+      <div className='login-register-container'>
+          <h1>Login</h1>
+          <p>Email</p>
+          <input type="email" placeholder='Schrijf hier je email' onChange={emailHandler} />
+          <p>Paswoord</p>
+          <input type="password" placeholder='Schrijf hier je paswoord' onChange={passwordHandler} />
+          <div className='button-container'>
+              <button onClick={login}>Login</button>
+          </div>
+          <p>Nog geen account? 
+          <Link to="/register"> Registreer</Link>
+          </p>
+      </div>
     </div>
   )
 }

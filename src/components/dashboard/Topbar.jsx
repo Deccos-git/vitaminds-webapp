@@ -12,6 +12,8 @@ import { useFirestoreNewNotifications } from '../../helpers/useFirestore'
 import changeStatus from '../common/ChangeStatus';
 import UserIcon from '../../assets/icons/user-icon.png'
 import SettingsIcon from '../../assets/icons/settings-icon.png'
+import SignOutIcon from '../../assets/icons/sign-out-icon.png'
+import { getAuth, signOut } from "firebase/auth";
 
 const TopBar = () => {
   const [user] = useContext(Auth)
@@ -36,6 +38,19 @@ const TopBar = () => {
     navigate(`settings/${user.id}`) 
     
     setShowProfileDropdown('none')
+  }
+
+  const logout = () => {
+
+
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      navigate(`/login`) 
+    }).catch((error) => {
+      alert(error)
+    });
+
+    
   }
 
 
@@ -69,6 +84,11 @@ const TopBar = () => {
             <div className='dropdown-icon-container'>
                 <img src={SettingsIcon} alt="settings-icon" onClick={settingsLink}/>
                 <p onClick={settingsLink}>Instellingen</p>
+            </div>
+            <div className='line-div'></div>
+            <div className='dropdown-icon-container'>
+                <img src={SignOutIcon} alt="settings-icon" onClick={settingsLink}/>
+                <p onClick={logout}>Uitloggen</p>
             </div>
           </div>
         </div>
