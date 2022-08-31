@@ -17,6 +17,8 @@ const AddArticle = () => {
     const [title, setTitle] = useState(null)
     const [banner, setBanner] = useState(null)
 
+    console.log(banner)
+
     const id = Location()[3]
     const navigate = useNavigate()
 
@@ -29,7 +31,7 @@ const AddArticle = () => {
     }
 
     const bannerHandler = (e) => {
-        saveFile(e, setBanner)
+        saveFile(e.target.files, setBanner)
     }
 
     const saveStory = async (e) => {

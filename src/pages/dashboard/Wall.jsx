@@ -29,7 +29,7 @@ const Wall = () => {
       <>
         {users && users.map(user => (
           <>
-            <div key={user.id} className='card-user-container'>
+            <div key={user.id} className='card-user-container' onClick={() => navigateTo(`/dashboard/profile/${user.id}`)}>
               <img src={user.avatar} alt="user avatar" />
               <p><b>{user.name}</b></p>
             </div>

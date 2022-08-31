@@ -11,6 +11,8 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from '../../libs/firebase'
 import { Auth } from '../../state/Auth';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router'
+import GetLink from "../../hooks/GetLink"
 
 const Messages = ({id}) => {
     const [auth] = useContext(Auth)
@@ -19,8 +21,13 @@ const Messages = ({id}) => {
     const [showwAuthorOptions, setShowAuthorOptions] = useState('none')
     const [showEditInput, setShowEditInput] = useState('none')
     const [showMessage, setShowMessage] = useState('block')
+    const [stateUpdate, setStateUpdate] = useState('')
+
+    console.log(stateUpdate)
 
     const messages = useFirestoreMessage(id)
+
+    const navigateTo = useNavigate()
 
     const MessageMeta = ({message}) => {
 
@@ -31,7 +38,7 @@ const Messages = ({id}) => {
             <div className='message-meta-container'>
                 <>
                 {users && users.map(user => (
-                    <div key={user.id} className='message-user-meta-container'>
+                    <div key={user.id} className='message-user-meta-container' onClick={() => navigateTo(`/dashboard/profile/${user.id}`)}>
                         <img src={user.avatar} alt="user avatar" />
                         <p>{user.name}</p>
                     </div>
@@ -78,7 +85,7 @@ const Messages = ({id}) => {
         } else {
             return(
                 <div>
-                    <p className='message-content' style={{display: showMessage}}>{message.message}</p>
+                    <p className='message-content' style={{display: showMessage}} dangerouslySetInnerHTML={{__html:GetLink(message)}}></p>
                     <div className='edit-message-container' style={{display: showEditInput}}>
                         <input type="text" defaultValue={message.message} onChange={editHandler} />
                         <button onClick={saveEdit}>Opslaan</button>
@@ -138,7 +145,7 @@ const Messages = ({id}) => {
                             </div>
                         </div>
                         <div style={{display: showMessageBar}}>
-                            <MessageBar item='reaction' id={message.id} reciever={message.user} parent={message.id} />
+                            <MessageBar item='reaction' id={message.id} reciever={message.user} parent={message.id} setState={setStateUpdate} />
                         </div>
                         <NestedMessages id={message.id} />
                     </div>

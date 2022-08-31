@@ -6,8 +6,9 @@ import { useContext, useState } from 'react';
 import { db } from '../../libs/firebase'
 import Location from "../../helpers/location"
 import notifcation from './Notifcation';
+import saveFile from '../../components/core/saveFile';
 
-const MessageBar = ({item, reciever, id,}) => {
+const MessageBar = ({item, reciever, id, setState}) => {
     const [user] = useContext(Auth)
 
     const [message, setMessage] = useState('')
@@ -38,6 +39,7 @@ const MessageBar = ({item, reciever, id,}) => {
           })
 
           notifcation(id, reciever, user.id, 'Reaction')
+          setState('update')
 
     }
 
@@ -51,14 +53,20 @@ const MessageBar = ({item, reciever, id,}) => {
 
     }
 
+    const fileHandler = (e) => {
+      saveFile(e.target.files, setMessage)
+    }
+
+    console.log(message)
+
   return (
     <div>
       <div className='messagebar-container'>
           <button onClick={toggleFileUpload}>+</button>
-          <input type="text" placeholder='Schrijf hier een bericht' onChange={messageHandler} />
+          <input type="text" placeholder='Schrijf hier een bericht' value={message} onChange={messageHandler} />
           <button onClick={saveMessage}>Verstuur</button>
       </div>
-      <input id='upload-file-input' type="file" style={{display: showFileUpload}} />
+      <input id='upload-file-input' type="file" style={{display: showFileUpload}} onChange={fileHandler} />
     </div>
     
   )

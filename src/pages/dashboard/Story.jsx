@@ -47,16 +47,19 @@ const Story = () => {
         {stories && stories.map(story => (
             <div key={story.id} className='story-container'>
                 <div className='page-top-container'>
+                    <img src={story.banner} alt="article banner" />
                     <h1>{story.title}</h1>
                     <User story={story}/>
                 </div>
                 <div className='story-body-container'>
                     <p dangerouslySetInnerHTML={{__html: story.body}}></p>
                 </div>
-                <h2>Berichten</h2>
-                <Messages id={id}/>
-                <div className='messagebar-story-container'>
-                    <MessageBar item='story' id={story.id} />
+                <div className='story-messages-container'>
+                    <h2>Berichten</h2>
+                    <Messages id={id}/>
+                    <div className='messagebar-story-container'>
+                        <MessageBar item='story' id={story.id} />
+                    </div>
                 </div>
             </div>
         ))}

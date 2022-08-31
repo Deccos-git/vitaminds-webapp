@@ -28,7 +28,7 @@ const CreateStorie = () => {
     }
 
     const bannerHandler = (e) => {
-        saveFile(e, setBanner)
+        saveFile(e.target.files, setBanner)
     }
 
     const publicAnonymouslyHandler =(e) => {

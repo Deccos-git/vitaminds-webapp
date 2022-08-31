@@ -3,12 +3,31 @@ import ActivityIcon from '../../assets/icons/activity-icon.png'
 import FileIcon from '../../assets/icons/file-icon.png'
 import GroupIcon from '../../assets/icons/group-icon.png'
 import HomeIcon from '../../assets/icons/home-icon.png'
-import { useFirestore, useFirestoreGroups } from "../../helpers/useFirestore"
+import { useFirestoreGroups, useFirestoreId, useFirestoreMemberships } from "../../helpers/useFirestore"
+import { Auth } from '../../state/Auth';
+import { useContext } from 'react';
 
 const Sidebar = () => {
+  const [auth] = useContext(Auth)
 
   const groups = useFirestoreGroups('public')
-  const academies = useFirestore('academies')
+  const academiesMember = useFirestoreMemberships('type', 'academy',  auth.id)
+
+  const Academies = ({item}) => {
+
+    const academies = useFirestoreId('academies', item.academy)
+
+    return(
+      <>
+        {academies && academies.map(academie => (
+          <div key={academie.id} className='sidebar-link-container'>
+            <img src={HomeIcon} alt="group icon" />
+            <NavLink to={`/dashboard/academy/${academie.id}`} activeClassName="selected">{academie.name}</NavLink>
+          </div>
+        ))}
+      </>
+    )
+  }
 
   return (
     <div id='sidebar-container'>
@@ -40,12 +59,10 @@ const Sidebar = () => {
 
       <div className='sidebar-inner-container'>
         <h2>Herstelacademies</h2>
-        {academies && academies.map(academie => (
-          <div key={academie.id} className='sidebar-link-container'>
-            <img src={HomeIcon} alt="group icon" />
-            <NavLink to={`/dashboard/academy/${academie.id}`} activeClassName="selected">{academie.name}</NavLink>
-          </div>
+        {academiesMember && academiesMember.map(item => (
+          <Academies item={item}/>
         ))}
+        
       </div>
     </div>
   )

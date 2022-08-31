@@ -1,6 +1,6 @@
 import React from 'react'
 import Location from "../../helpers/location"
-import { useFirestoreId, useFirestore, useFirestoreRoles, useFirestoreRolesAcademy } from "../../helpers/useFirestore"
+import { useFirestoreId, useFirestore, useFirestoreRoles, useFirestoreRolesAcademy, useFirestoreMemberships } from "../../helpers/useFirestore"
 import { doc, updateDoc, setDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
 import { db } from '../../libs/firebase'
 import saveFile from '../../components/core/saveFile';
@@ -10,6 +10,7 @@ import uuid from 'react-uuid';
 import DeleteIcon from '../../assets/icons/delete-icon.png'
 import { Auth } from '../../state/Auth';
 import { useContext } from 'react';
+import { useNavigate } from "react-router-dom"
 
 const Settings = () => {
   const [auth] = useContext(Auth)
@@ -23,6 +24,7 @@ const Settings = () => {
   const [allAcademyAdmins, setAllAcademyAdmins] = useState([])
 
   const id = Location()[3]
+  const navigate = useNavigate()
 
   const users = useFirestoreId('users', id)
   const allUsers = useFirestore('users')
@@ -30,6 +32,7 @@ const Settings = () => {
   const academyAdmins = useFirestoreRoles('academyAdmin')
   const academies = useFirestore('academies')
   const authAcademies = useFirestoreRolesAcademy('academyAdmin', auth.id)
+  const groupsMember = useFirestoreMemberships('type', 'group',  auth.id)
 
   // Set all academyadmins
   useEffect(() => {
@@ -225,13 +228,13 @@ const Settings = () => {
         <h3>Academy author</h3>
         <h4>Authors</h4>
         {academyAuthors && academyAuthors.map(item => (
-          <AcademyAuthor item={item} />
+          <AcademyAuthor item={item} key={item.id} />
         ))}
         <h4>Author toevoegen</h4>
         <select name="" id="" onChange={academyAuthorUserHandler}>
           <option value="">-- Selecteer lid --</option>
           {allUsers && allUsers.map(item => (
-            <option value={item.id}>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
           ))}
         </select>
         <div className='button-container'>
@@ -276,13 +279,42 @@ const Settings = () => {
     )
   }
 
+  const Group = ({item}) => {
+
+    const groups = useFirestoreId('groups', item.group)
+
+    return(
+      <>
+        {groups && groups.map(group => (
+          <div key={group.id}>
+            <p>{group.name}</p>
+            <div className='button-container card-button-container'>
+                <button onClick={() => navigate(`/dashboard/group/${group.id}`)}>Bekijk</button>
+            </div>
+          </div>
+        ))}
+      </>
+    )
+  }
+
+  const showGroup = (e) => {
+    const id = e.target.dataset.id
+  }
+
+  const deleteMembership = async (e) => {
+
+    const docid = e.target.dataset.docid 
+
+    await deleteDoc(doc(db, "memberships", docid));
+  }
+
   return (
     <div className='page-container'>
         <div className='page-top-container'>
             <h1>Instellingen</h1>
         </div>
         {users && users.map(user => (
-          <div>
+          <div key={user.id}>
             <h2>Wijzig naam</h2>
             <input type="text" defaultValue={user.name} data-docid={user.docid} onChange={nameHandler} />
 
@@ -295,6 +327,21 @@ const Settings = () => {
             </div>
             <div className='button-container'>
               <button className='button-simple' data-docid={user.docid} onClick={saveAvatar}>Opslaan</button>
+            </div>
+
+            <div className='line-div-settings'></div>
+
+            <div>
+              <h2>Lidmaatschappen</h2>
+              <h3>Groepen</h3>
+              <div>
+                {groupsMember && groupsMember.map(item => (
+                  <div className='banner' key={item.id}>
+                    <Group item={item}/>
+                    <img src={DeleteIcon} alt="delete icon" className='delete-icon-settings' data-docid={item.docid} onClick={deleteMembership}/>
+                </div>
+                ))}
+              </div>
             </div>
 
             <div className='line-div-settings'></div>
@@ -345,7 +392,7 @@ const Settings = () => {
             <div className='line-div-settings'></div>
 
             <div style={{display: allAcademyAdmins.includes(auth.id) ? 'block' : 'none'}}>
-                <h2>Herstelacademy instellingen</h2>
+                <h2>Herstelacademie instellingen</h2>
                 {authAcademies && authAcademies.map(item => (
                   <AuthAcademy item={item}/>
                 ))}

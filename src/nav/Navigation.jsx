@@ -16,6 +16,7 @@ import Settings from "../pages/auth/Settings";
 import AddArticle from "../pages/dashboard/AddArticle";
 import AddGroup from "../pages/dashboard/AddGroup";
 import Article from "../pages/dashboard/Article";
+import Chat from "../pages/dashboard/Chat";
 
 const Navigation = () => {
   return (
@@ -31,6 +32,7 @@ const Navigation = () => {
             <Route path={`/dashboard/settings/:id`} element={<Settings/>}/>
             <Route path={`/dashboard/notifications/:id`} element={<Notifications/>}/>
             <Route path={`/dashboard/chats/:id`} element={<Chats/>}/>
+            <Route path={`/dashboard/chat/:id`} element={<Chat/>}/>
             <Route path={`/dashboard/search`} element={<Search/>}/>
             <Route path={`/dashboard/addgroup/:id`} element={<AddGroup/>}/>
             <Route path={`/dashboard/addarticle/:id`} element={<AddArticle/>}/>

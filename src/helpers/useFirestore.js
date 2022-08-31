@@ -373,6 +373,37 @@ const useFirestoreRolesAcademy = (role, id) => {
     return docs
 }
 
+const useFirestoreChats = (id) => {
+
+    const [docs, setDocs] = useState("")
+
+    const getCollection = async () => {
+
+        const col = collection(db, 'chats');
+        const q = query(col, where('users', 'array-contains', id))
+        const snapshot = await getDocs(q);
+
+        const docArray = []
+
+        snapshot.docs.forEach(doc => 
+            docArray.push({...doc.data(), docid: doc.id})
+        );
+
+        return docArray
+
+    }
+
+    useEffect(() => {
+
+        getCollection().then(coll => {
+            setDocs(coll)
+        })
+
+    },[id])
+
+    return docs
+}
+
 export { 
     useFirestore,
     useFirestoreOrdered,
@@ -385,5 +416,6 @@ export {
     useFirestoreGroups,
     useFirestoreArticles,
     useFirestoreRoles,
-    useFirestoreRolesAcademy
+    useFirestoreRolesAcademy,
+    useFirestoreChats
 }

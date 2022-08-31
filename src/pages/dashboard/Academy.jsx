@@ -1,14 +1,18 @@
 import Location from "../../helpers/location"
-import { useFirestoreId, useFirestoreGroups, useFirestoreArticles } from "../../helpers/useFirestore"
+import { useFirestoreId, useFirestoreGroups, useFirestoreArticles, useFirestoreMemberships } from "../../helpers/useFirestore"
 import { useNavigate } from "react-router-dom";
 import timestampOptions from '../../helpers/timestampOptions'
+import { Auth } from '../../state/Auth';
+import { useContext } from 'react';
 
 const Academy = () => {
+    const [auth] = useContext(Auth)
 
     const id = Location()[3]
     const navigate = useNavigate()
 
     const academies = useFirestoreId('academies', id)
+    const authAcademies = useFirestoreMemberships('academy', id, auth.id)
 
     const Groups = ({academy}) => {
 
@@ -54,6 +58,7 @@ const Academy = () => {
             <div className='card-container'>
                 {articles && articles.map(item => (
                     <div key={item.id} className='card'>
+                        <img src={item.banner} alt="article banner" />
                         <h2>{item.title}</h2>
                         <User item={item}/>
                         <div className='button-container card-button-container'>
@@ -75,14 +80,14 @@ const Academy = () => {
                 <div>
                     <div className='academy-section-header-container'>
                         <h2>Groepen</h2>
-                        <button onClick={() => navigate(`/dashboard/addgroup/${academy.id}`) }>+</button>
+                        <button onClick={() => navigate(`/dashboard/addgroup/${academy.id}`)} style={{display: authAcademies.length > 0 ? 'block' : 'none'}}>+</button>
                     </div>
                     <Groups academy={academy}/>
                 </div>
                 <div>
                     <div className='academy-section-header-container'>
                         <h2>Documenten</h2>
-                        <button onClick={() => navigate(`/dashboard/addarticle/${academy.id}`) }>+</button>
+                        <button onClick={() => navigate(`/dashboard/addarticle/${academy.id}`)} style={{display: authAcademies.length > 0 ? 'block' : 'none'}}>+</button>
                     </div>
                     <Articles academy={academy}/>
                 </div>

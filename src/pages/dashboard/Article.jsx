@@ -31,16 +31,19 @@ const Article = () => {
         {articles && articles.map(item => (
             <div key={item.id} className='story-container'>
                 <div className='page-top-container'>
+                    <img src={item.banner} alt="article banner" />
                     <h1>{item.title}</h1>
                     <User item={item}/>
                 </div>
                 <div className='story-body-container'>
                     <p dangerouslySetInnerHTML={{__html: item.body}}></p>
                 </div>
-                <h2>Berichten</h2>
-                <Messages id={id}/>
-                <div className='messagebar-story-container'>
-                    <MessageBar item='story' id={item.id} />
+                <div className='story-messages-container'>
+                    <h2>Berichten</h2>
+                    <Messages id={id}/>
+                    <div className='messagebar-story-container'>
+                        <MessageBar item='story' id={item.id} />
+                    </div>
                 </div>
             </div>
         ))}

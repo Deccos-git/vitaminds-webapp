@@ -2,7 +2,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 
 const saveFile = (file, setState) => {
 
-    console.log(file[0].name)
+    console.log(file[0].type)
 
     const storage = getStorage();
     const storageRef = ref(storage, `posts/${file[0].name}`);
@@ -28,7 +28,21 @@ const saveFile = (file, setState) => {
         () => {
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
-            setState(downloadURL)
+
+            if(file[0].type === "image/jpeg" || file[0].type === "image/png"){
+                setState(`<img style="width:80%" src="${downloadURL}">`)
+            } else if(file[0].type === "video"){
+                setState(
+                    `<video width="90%" height="90%" controls autoplay muted>
+                        <source src="${downloadURL}">
+                    </video>`)
+            } else if(file[0].type === "application"){
+                setState(
+                    `<embed src="${downloadURL}" width="90% height="90%"></embed>`)
+            } else {
+                setState(downloadURL)
+            }
+            
             });
         }
     );
