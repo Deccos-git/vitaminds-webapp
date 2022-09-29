@@ -17,6 +17,7 @@ import AddArticle from "../pages/dashboard/AddArticle";
 import AddGroup from "../pages/dashboard/AddGroup";
 import Article from "../pages/dashboard/Article";
 import Chat from "../pages/dashboard/Chat";
+import Academies from "../pages/dashboard/Academies";
 
 const Navigation = () => {
   return (
@@ -37,6 +38,7 @@ const Navigation = () => {
             <Route path={`/dashboard/addgroup/:id`} element={<AddGroup/>}/>
             <Route path={`/dashboard/addarticle/:id`} element={<AddArticle/>}/>
             <Route path={`/dashboard/article/:id`} element={<Article/>}/>
+            <Route path={`/dashboard/academies`} element={<Academies/>}/>
         </Route>
         <Route path={`/`} >
             <Route exact path={`/`} element={<Login/>}/>

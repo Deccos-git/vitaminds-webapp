@@ -16,12 +16,9 @@ const Register = () => {
     const [password, setPassword] = useState(null)
     const [name, setName] = useState(null)
     const [avatar, setAvatar] = useState(dummyAvatar)
-    const [academy, setAcademy] = useState(null)
     const [progress, setProgress] = useState(0)
 
     const navigate = useNavigate()
-
-    const academies = useFirestore('academies')
 
     const register = (e) => {
 
@@ -42,7 +39,6 @@ const Register = () => {
                 avatar: avatar,
                 id: id,
                 activated: false,
-                academy: academy,
                 timestamp: serverTimestamp()
               });
 
@@ -50,14 +46,6 @@ const Register = () => {
                 user: id,
                 timestamp: serverTimestamp(),
                 type: 'story',
-                id: uuid(),
-              })
-
-              await setDoc(doc(db, 'memberships', uuid()),{
-                user: id,
-                timestamp: serverTimestamp(),
-                type: 'academy',
-                academy: academy,
                 id: uuid(),
               })
 
@@ -87,15 +75,6 @@ const Register = () => {
         const value = e.target.value 
 
         setPassword(value)
-    }
-
-    const academyHandler = (e) => {
-
-        const option = e.target.options
-
-        const value = option[option.selectedIndex].value
-
-        setAcademy(value)
     }
 
     const avatarHandler = (e) => {
@@ -156,15 +135,6 @@ const Register = () => {
                 <div>
                     <input type="file" onChange={avatarHandler} />
                 </div>
-           </div>
-           <div className='login-register-detail-container'>
-                <h2>Herstelacademie</h2>
-                <select name="" id="" onChange={academyHandler}>
-                    <option value="">Selecteer je herstelacademie</option>
-                    {academies && academies.map(item => (
-                        <option value={item.id}>{item.name}</option>
-                    ))}
-                </select>
            </div>
            <div className='login-register-detail-container'>
                 <h2>Email</h2>

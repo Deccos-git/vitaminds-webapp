@@ -3,6 +3,7 @@ import ActivityIcon from '../../assets/icons/activity-icon.png'
 import FileIcon from '../../assets/icons/file-icon.png'
 import GroupIcon from '../../assets/icons/group-icon.png'
 import HomeIcon from '../../assets/icons/home-icon.png'
+import SkylineIcon from '../../assets/icons/skyline-icon.png'
 import { useFirestoreGroups, useFirestoreId, useFirestoreMemberships } from "../../helpers/useFirestore"
 import { Auth } from '../../state/Auth';
 import { useContext } from 'react';
@@ -59,6 +60,10 @@ const Sidebar = () => {
 
       <div className='sidebar-inner-container'>
         <h2>Herstelacademies</h2>
+        <div className='sidebar-link-container'>
+          <img src={SkylineIcon} alt="file icon" />
+          <NavLink to="/dashboard/academies" activeClassName="selected">Alle academies</NavLink>
+        </div>
         {academiesMember && academiesMember.map(item => (
           <Academies item={item}/>
         ))}
