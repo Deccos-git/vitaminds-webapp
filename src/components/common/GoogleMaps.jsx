@@ -1,49 +1,62 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { Map } from 'react-map-gl'
+import DeckGL, {GeoJsonLayer} from 'deck.gl'
+// import data from '../../data/data.json'
 
-const containerStyle = {
-  width: '100%',
-  height: '70vh',
-  borderRadius: '5px'
-};
 
-const center = {
-  lat: 52.370216,
-  lng: 4.895168
-};
+const GoogleMaps = () => {
 
-function MyComponent() {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyBKpvQ2FfCELXz9bfL6PbFiSW2k7Ze5oPk"
-  })
+  const accesToken = 'pk.eyJ1IjoiZGVjY29zIiwiYSI6ImNsOG9nbHJkaTA3aXMzcXJ1bG52NW16bGoifQ.oFuHLcVdGKYLYEiiC5SPVg'
+  const mapStyle = 'https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json'
+  const initialView = {
+    latitude: 52.092876,
+    longitude: 5.104480,
+    zoom: 7,
+    bearing: 0,
+    pitch: 30
+  };
 
-  const [map, setMap] = React.useState(null)
+  const data = {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [5.104480, 52.092876]
+    },
+    "properties": {
+      "name": "Dinagat Islands"
+    }
+  }
 
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
+  const layers = [
+    new GeoJsonLayer({
+      id: 'herstelacademies',
+      data: data,
+      filled: true,
+      pointRadiusMinPixels: 10,
+      pointRadiusScale: 2000,
+      getPointRadius: 2,
+      getFillColor: [86, 144, 58, 250],
+      pickable: true,
+      autoHighlight: true
+    })
+  ]
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-  return isLoaded ? (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={7}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        <Marker
-        position={ '52.370216','4.895168' }
-        />
-        <></>
-      </GoogleMap>
-  ) : <></>
+  return (
+    <DeckGL
+      initialViewState={initialView}
+      controller={true}
+      layers={layers}
+      // style={{width: 600, height: 400, left: '30%', }}
+    >
+      <div>
+        <h1>Hallo</h1>
+      </div>
+      <Map
+        mapStyle={mapStyle}
+        mapboxAccessToken={accesToken}
+        // style={{width: 600, height: 400}}
+      />
+    // </DeckGL>
+  )
 }
 
-export default React.memo(MyComponent)
+export default GoogleMaps

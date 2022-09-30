@@ -2,13 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import ButtonClicked from "../../hooks/ButtonClicked";
-import { useState } from "react";
+import { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import Logo from '../../assets/Logo2021-red.png'
+import { Auth } from '../../state/Auth';
 
 const Login = () => {
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
+  const [user] = useContext(Auth)
+
+  console.log(user)
 
   const navigate = useNavigate()
 
@@ -42,6 +46,14 @@ const Login = () => {
 
       setPassword(value)
   }
+
+  const isAuth = () => {
+    if(user){
+      navigate(`/dashboard/wall`)
+    }
+  }
+
+  isAuth()
 
   return (
     <div className="layout-container">
