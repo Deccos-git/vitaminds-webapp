@@ -2,6 +2,7 @@ import { Map } from 'react-map-gl'
 import DeckGL, {GeoJsonLayer} from 'deck.gl'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
+import data from '../../data/data.json'
 
 const Academies = () => {
   const [name, setName] = useState(null)
@@ -12,47 +13,12 @@ const Academies = () => {
   const accesToken = 'pk.eyJ1IjoiZGVjY29zIiwiYSI6ImNsOG9nbHJkaTA3aXMzcXJ1bG52NW16bGoifQ.oFuHLcVdGKYLYEiiC5SPVg'
   const mapStyle = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
   const initialView = {
-    latitude: 52.092876,
-    longitude: 5.104480,
+    latitude: 51.8125626,
+    longitude: 5.8372264,
     zoom: 7,
     bearing: 0,
     pitch: 30
   };
-
-  const data = [
-    {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [5.104480, 52.092876]
-    },
-    "properties": {
-      "name": "Utrecht"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [6.5680077, 53.2190652]
-    },
-    "properties": {
-      "name": "Herstelacademie Sedna",
-      "id": 'hdssgjdj323'
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [6.95251346620856, 52.752866]
-    },
-    "properties": {
-      "name": "Herstelacademie Plus",
-      "id": "7cxvhg6732"
-    }
-  }
-  ]
 
   const onClick = (info) => {
 
@@ -89,9 +55,9 @@ const Academies = () => {
         mapboxAccessToken={accesToken}
         // style={{width: 600, height: 400}}
       />
-      <div id='map-item-info-container' style={{display: name ? 'block' : 'none'}}>
-        <h1>{name}</h1>
-        <button onClick={() => navigate(`/dashboard/academy/${id}`)}>Bekijk</button>
+      <div id='map-item-info-container'>
+        <h1>{name ? name : 'Selecteer een academie op de map'}</h1>
+        <button onClick={() => navigate(`/dashboard/academy/${id}`)} style={{display: id ? 'block' : 'none'}}>Bekijk</button>
       </div>
      </DeckGL>
   )

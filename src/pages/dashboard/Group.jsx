@@ -15,12 +15,11 @@ const Group = () => {
     const [auth] = useContext(Auth)
     const [showRegister, setShowRegister] = useState('flex')
     const [showGroup, setShowGroup] = useState('none')
-    const [group, setGroup] = useState('')
 
     const id = Location()[3]
 
     const groups = useFirestoreId('groups', id)
-    const members = useFirestoreMemberships('group', group, auth.id)
+    const members = useFirestoreMemberships('group', id, auth.id)
 
     const isMember = () => {
         if(members.length > 0){
@@ -34,21 +33,6 @@ const Group = () => {
         isMember()
 
     },[members])
-
-
-    const groupId = () => {
-
-        groups && groups.forEach(group => {
-
-            setGroup(group.id)
-        })
-    }
-
-    useEffect(() => {
-
-        groupId()
-
-    },[groups])
 
     const Register = ({group}) => {
 

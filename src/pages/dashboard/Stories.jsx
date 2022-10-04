@@ -58,7 +58,7 @@ const Stories = () => {
         <div className='card-container'>
             {stories && stories.map(story => (
                 <div className='card' key={story.id}>
-                    <img src={story.banner} alt="article banner" />
+                    <img className='card-story-banner' src={story.banner} alt="article banner" />
                     <h2>{story.title}</h2>
                     <User story={story}/>
                     <div className='button-container card-button-container'>

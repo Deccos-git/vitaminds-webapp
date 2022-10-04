@@ -47,7 +47,7 @@ const Story = () => {
         {stories && stories.map(story => (
             <div key={story.id} className='story-container'>
                 <div className='page-top-container'>
-                    <img src={story.banner} alt="article banner" />
+                    <img className='story-banner' src={story.banner} alt="article banner" />
                     <h1>{story.title}</h1>
                     <User story={story}/>
                 </div>

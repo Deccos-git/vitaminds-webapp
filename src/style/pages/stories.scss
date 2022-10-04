@@ -46,6 +46,10 @@
 
 .story-body-container{
     width: 90%;
+    background-color: white;
+    padding: 5%;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
 }
 
 .messagebar-story-container{
@@ -57,4 +61,18 @@
 .story-messages-container{
     border-top: 1px solid lightgray;
     width: 100%;
+}
+
+.story-banner{
+    height: 300px;
+    object-fit: cover;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-story-banner{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }

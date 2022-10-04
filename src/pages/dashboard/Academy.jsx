@@ -3,16 +3,33 @@ import { useFirestoreId, useFirestoreGroups, useFirestoreArticles, useFirestoreM
 import { useNavigate } from "react-router-dom";
 import timestampOptions from '../../helpers/timestampOptions'
 import { Auth } from '../../state/Auth';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import ActivityIcon from '../../assets/icons/activity-icon.png'
+import GroupIcon from '../../assets/icons/group-icon.png'
+import ButtonClicked from "../../hooks/ButtonClicked";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from '../../libs/firebase'
+import uuid from 'react-uuid';
 
 const Academy = () => {
     const [auth] = useContext(Auth)
+
+    const [showRegister, setShowRegister] = useState('flex')
+    const [showAcademy, setShowAcademy] = useState('none')
 
     const id = Location()[3]
     const navigate = useNavigate()
 
     const academies = useFirestoreId('academies', id)
     const authAcademies = useFirestoreMemberships('academy', id, auth.id)
+
+    useEffect(() => {
+        if(authAcademies.length > 0){
+            setShowAcademy('block')
+            setShowRegister('none')
+        }
+
+    },[authAcademies])
 
     const Groups = ({academy}) => {
 
@@ -70,10 +87,52 @@ const Academy = () => {
         )
     }
 
-  return (
-    <div className='page-container'>
-        {academies && academies.map(academy => (
-            <div key={academy.id}>
+    const Register = ({academy}) => {
+
+        const saveMember = async (e) => {
+
+            ButtonClicked(e, 'Aangemeld')
+
+            await setDoc(doc(db, 'memberships', uuid()),{
+                user: auth.id,
+                timestamp: serverTimestamp(),
+                type: 'academy',
+                academy: id,
+                id: uuid(),
+              })
+
+            setShowRegister('none')
+            setShowAcademy('block')
+
+        }
+
+        return(
+            <div className='group-register-container' style={{display: showRegister}}>
+                <div className='page-top-container'>
+                    <h1>{academy.name}</h1>
+                </div>
+                <div className='group-description-container'>
+                    <div className='group-description-item-container'>
+                        <img src={GroupIcon} alt="group icon" />
+                        <p>Aantal leden:</p>
+                        {/* <p>{group.members.length}</p> */}
+                    </div>
+                    <div className='group-description-item-container'>
+                        <img src={ActivityIcon} alt="active icon" />
+                        <p>Laatst actief:</p>
+                        <p>{academy.lastActive}</p>
+                    </div>
+                    
+                </div>
+                <button onClick={saveMember}>Lid worden</button>
+            </div>
+        )
+    }
+
+    const Members = ({academy}) => {
+
+        return(
+            <div key={academy.id} style={{display: showAcademy}}>
                 <div className='page-top-container'>
                     <h1>{academy.name}</h1>
                 </div>
@@ -92,6 +151,17 @@ const Academy = () => {
                     <Articles academy={academy}/>
                 </div>
             </div>
+        )
+
+    }
+
+  return (
+    <div className='page-container'>
+        {academies && academies.map(academy => (
+            <>
+                <Register academy={academy}/>
+                <Members academy={academy}/>
+            </>
         ))}
     </div>
   )
