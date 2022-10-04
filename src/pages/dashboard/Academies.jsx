@@ -1,8 +1,12 @@
 import { Map } from 'react-map-gl'
 import DeckGL, {GeoJsonLayer} from 'deck.gl'
+import mapboxgl from 'mapbox-gl';
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import data from '../../data/data.json'
+
+ // eslint-disable-next-line import/no-webpack-loader-syntax, import/no-unresolved
+ mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const Academies = () => {
   const [name, setName] = useState(null)
