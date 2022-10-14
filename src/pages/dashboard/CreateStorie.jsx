@@ -58,7 +58,8 @@ const CreateStorie = () => {
             timestamp: serverTimestamp(),
             type: 'story',
             id: uuid(),
-            storyId: storyId
+            storyId: storyId,
+            public: publicAnonymously
         })
 
         await setDoc(doc(db, 'search', uuid()),{
@@ -68,7 +69,8 @@ const CreateStorie = () => {
             id: uuid(),
             itemId: storyId,
             content: title,
-            url: `story/${storyId}`
+            url: `story/${storyId}`,
+            public: publicAnonymously
         })
 
         navigate(`/dashboard/stories`)

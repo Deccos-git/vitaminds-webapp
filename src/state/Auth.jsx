@@ -16,8 +16,6 @@ export const AuthProvider = (props) => {
         if (user) {
             const email = user.email;
 
-            console.log(email)
-
             setEmail(email)
 
         } else {

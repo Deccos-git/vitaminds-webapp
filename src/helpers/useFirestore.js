@@ -1,6 +1,6 @@
 import { db } from "../libs/firebase"
 import { useState, useEffect} from 'react';
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore"; 
+import { collection, query, where, getDocs, orderBy, onSnapshot } from "firebase/firestore"; 
 
 const useFirestore = (collect) => {
 
@@ -64,66 +64,64 @@ const useFirestoreOrdered = (collect, order) => {
 }
 
 const useFirestoreId = (collect, id) => {
+    const [docs, setDocs] = useState([])
 
-    const [docs, setDocs] = useState("")
-
-    const getCollection = async () => {
-
-        const col = collection(db, collect);
-        const q = query(col, where("id", '==', id))
-        const snapshot = await getDocs(q);
-
-        const docArray = []
-
-        snapshot.docs.forEach(doc => 
-            docArray.push({...doc.data(), docid: doc.id})
-        );
-
-        return docArray
-
-    }
+    const col = collection(db, collect);
+    const q = query(col, where("id", '==', id))
 
     useEffect(() => {
 
-        getCollection().then(coll => {
-            setDocs(coll)
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+            const docArray = [];
+
+            querySnapshot.forEach((doc) => {
+                docArray.push({...doc.data(), docid: doc.id});
+            });  
+
+            console.log(docArray)
+
+            setDocs(docArray)
+    
         })
+        return () => unsubscribe()
 
     },[collect, id])
 
     return docs
+
 }
 
 const useFirestoreMessage = (id) => {
+    const [docs, setDocs] = useState([])
 
-    const [docs, setDocs] = useState("")
-
-    const getCollection = async () => {
-
-        const col = collection(db, 'messages');
-        const q = query(col, where("itemId", '==', id), orderBy("timestamp", 'desc'))
-        const snapshot = await getDocs(q);
-
-        const docArray = []
-
-        snapshot.docs.forEach(doc => 
-            docArray.push({...doc.data(), docid: doc.id})
-        );
-
-        return docArray
-
-    }
+    const col = collection(db, 'messages');
+    const q = query(col, where("itemId", '==', id), orderBy("timestamp", 'desc'))
 
     useEffect(() => {
 
-        getCollection().then(coll => {
-            setDocs(coll)
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+            const docArray = [];
+
+            querySnapshot.forEach((doc) => {
+                docArray.push({...doc.data(), docid: doc.id});
+            });  
+
+            console.log(docArray)
+
+            setDocs(docArray)
+    
         })
+        return () => unsubscribe()
 
     },[id])
 
     return docs
+
 }
+
+  
 
 const useFirestoreLikes = (id) => {
 

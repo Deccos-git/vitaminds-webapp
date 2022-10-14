@@ -39,7 +39,6 @@ const MessageBar = ({item, reciever, id, setState}) => {
           })
 
           notifcation(id, reciever, user.id, 'Reaction')
-          setState('update')
 
     }
 

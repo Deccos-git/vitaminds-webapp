@@ -21,15 +21,14 @@ const Messages = ({id}) => {
     const [showwAuthorOptions, setShowAuthorOptions] = useState('none')
     const [showEditInput, setShowEditInput] = useState('none')
     const [showMessage, setShowMessage] = useState('block')
-    const [stateUpdate, setStateUpdate] = useState('')
-
-    console.log(stateUpdate)
 
     const messages = useFirestoreMessage(id)
 
     const navigateTo = useNavigate()
 
     const MessageMeta = ({message}) => {
+
+        console.log(message)
 
         const users = useFirestoreId('users', message.user)
 
@@ -145,7 +144,7 @@ const Messages = ({id}) => {
                             </div>
                         </div>
                         <div style={{display: showMessageBar}}>
-                            <MessageBar item='reaction' id={message.id} reciever={message.user} parent={message.id} setState={setStateUpdate} />
+                            <MessageBar item='reaction' id={message.id} reciever={message.user} parent={message.id} />
                         </div>
                         <NestedMessages id={message.id} />
                     </div>
